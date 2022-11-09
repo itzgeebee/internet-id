@@ -120,7 +120,7 @@ def create_app(test_config=None):
     app.register_blueprint(verify.bp)
 
     cors = CORS()
-    cors.init_app(app, resources={r"/api/*": {"origins": "*",
+    cors.init_app(app, resources={r"*": {"origins": "*",
                                               "supports_credentials": True, }})
 
     return app
