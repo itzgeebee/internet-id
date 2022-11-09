@@ -6,13 +6,12 @@ import json
 from jsonschema import ValidationError
 from werkzeug.exceptions import HTTPException
 from flask_mail import Mail
-from flask_cors import CORS
+# from flask_cors import CORS
 
 load_dotenv()
 
 bcrypt = Bcrypt()
 sender = Mail()
-cors = CORS()
 
 
 def create_app(test_config=None):
@@ -50,7 +49,6 @@ def create_app(test_config=None):
     db.init_app(app)
     bcrypt.init_app(app)
     sender.init_app(app)
-    cors.init_app(app, resources={r"/api/v1/": {"origins": "*"}})
 
     @app.errorhandler(HTTPException)
     def handle_exception(e):
