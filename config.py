@@ -17,3 +17,6 @@ MAIL_DEFAULT_SENDER = os.environ.get("EMAIL")
 SESSION_TYPE = "filesystem"
 DEBUG = True
 CORS_METHODS = ["GET", "HEAD", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"]
+CORS_HEADERS = ["Content-Type", "Authorization", "Access-Control-Allow-Credentials"]
+CORS_SUPPORTS_CREDENTIALS = True
+CORS_ORIGINS = ["*"]
