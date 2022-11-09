@@ -15,5 +15,5 @@ MAIL_USERNAME = os.environ.get("EMAIL")
 MAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 MAIL_DEFAULT_SENDER = os.environ.get("EMAIL")
 SESSION_TYPE = "filesystem"
-DEBUG = True
+DEBUG = False
 CORS_METHODS = ["GET", "HEAD", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"]
