@@ -50,7 +50,6 @@ def create_app(test_config=None):
     db.init_app(app)
     bcrypt.init_app(app)
     sender.init_app(app)
-    cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
     @app.errorhandler(HTTPException)
     def handle_exception(e):
@@ -119,5 +118,9 @@ def create_app(test_config=None):
     app.register_blueprint(users.bp)
     app.register_blueprint(product.bp)
     app.register_blueprint(verify.bp)
+
+    cors = CORS()
+    cors.init_app(app, resources={r"/api/*": {"origins": "*",
+                                              "supports_credentials": True, }})
 
     return app
