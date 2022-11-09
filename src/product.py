@@ -14,7 +14,7 @@ from src.helpers.isValidMail import validate_mail
 from src.schema.schema import add_product_schema, update_product_schema
 
 bp = Blueprint('products', __name__, url_prefix='/api/v1/products')
-CORS(bp, resources={r"/api/*": {"origins": "*"}})
+CORS(bp)
 
 
 def build_sql_query(data, id, table_name):

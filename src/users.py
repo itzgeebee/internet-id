@@ -11,7 +11,7 @@ from src.helpers.transform_respnses import (
 )
 
 bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
-CORS(bp, resources={r"/api/*": {"origins": "*"}})
+CORS(bp)
 
 
 @bp.route('/me/', methods=['GET'])

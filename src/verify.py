@@ -13,7 +13,7 @@ from src.helpers.transform_respnses import (
 from src.schema.schema import verify_schema
 
 bp = Blueprint('verify', __name__, url_prefix='/api/v1/verify')
-CORS(bp, resources={r"/api/*": {"origins": "*"}})
+CORS(bp)
 
 
 @bp.route('/', methods=['POST'])

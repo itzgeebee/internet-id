@@ -25,7 +25,7 @@ from flask_mail import Message
 
 bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 
-CORS(bp, resources={r"/api/*": {"origins": "*"}})
+CORS(bp)
 verification_responses = {
     "not": "not verified",
     "pending": "pending, please try again later"
