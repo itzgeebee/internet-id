@@ -3,9 +3,12 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, make_response, current_app
 from flask_bcrypt import Bcrypt
 import json
+
+from flask_cors import CORS
 from jsonschema import ValidationError
 from werkzeug.exceptions import HTTPException
 from flask_mail import Mail
+
 # from flask_cors import CORS
 
 load_dotenv()
@@ -25,7 +28,6 @@ def create_app(test_config=None):
         DATABASE=os.environ.get('DATABASE_NAME'),
     )
 
-
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_object('config')
@@ -39,7 +41,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
     # a simple page that says hello
     @app.route('/hello')
     def hello():
@@ -49,6 +50,7 @@ def create_app(test_config=None):
     db.init_app(app)
     bcrypt.init_app(app)
     sender.init_app(app)
+    cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
     @app.errorhandler(HTTPException)
     def handle_exception(e):
@@ -117,7 +119,5 @@ def create_app(test_config=None):
     app.register_blueprint(users.bp)
     app.register_blueprint(product.bp)
     app.register_blueprint(verify.bp)
-
-
 
     return app
