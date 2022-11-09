@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, abort, jsonify, request
 )
+from flask_cors import CORS
 
 from src.helpers.check_valid_header import verify_token
 from src.db import get_db
@@ -10,6 +11,7 @@ from src.helpers.transform_respnses import (
 )
 
 bp = Blueprint('users', __name__, url_prefix='/api/v1/users')
+CORS(bp, resources={r"/api/*": {"origins": "*"}})
 
 
 @bp.route('/me/', methods=['GET'])

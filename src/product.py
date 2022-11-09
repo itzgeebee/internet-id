@@ -3,6 +3,7 @@ import re
 from flask import (
     Blueprint, abort, jsonify, request, g
 )
+from flask_cors import CORS
 from flask_expects_json import expects_json
 
 from src.helpers.auth_tokens import encode_auth_token
@@ -13,6 +14,7 @@ from src.helpers.isValidMail import validate_mail
 from src.schema.schema import add_product_schema, update_product_schema
 
 bp = Blueprint('products', __name__, url_prefix='/api/v1/products')
+CORS(bp, resources={r"/api/*": {"origins": "*"}})
 
 
 def build_sql_query(data, id, table_name):

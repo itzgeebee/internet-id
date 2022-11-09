@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, abort, jsonify, request, g
 )
+from flask_cors import CORS
 from flask_expects_json import expects_json
 
 from src.helpers.check_valid_header import verify_token, check_public_key
@@ -12,6 +13,7 @@ from src.helpers.transform_respnses import (
 from src.schema.schema import verify_schema
 
 bp = Blueprint('verify', __name__, url_prefix='/api/v1/verify')
+CORS(bp, resources={r"/api/*": {"origins": "*"}})
 
 
 @bp.route('/', methods=['POST'])

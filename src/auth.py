@@ -5,6 +5,7 @@ import secrets
 from flask import (
     Blueprint, g, abort, jsonify, request
 )
+from flask_cors import CORS
 
 from src.helpers.auth_tokens import encode_auth_token, check_valid_header
 from src.helpers.check_valid_header import verify_token
@@ -24,6 +25,7 @@ from flask_mail import Message
 
 bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 
+CORS(bp, resources={r"/api/*": {"origins": "*"}})
 verification_responses = {
     "not": "not verified",
     "pending": "pending, please try again later"
