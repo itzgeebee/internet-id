@@ -26,7 +26,6 @@ CREATE TABLE user(
 CREATE TABLE identity(
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
-    national_id_number varchar(200) NOT NULL UNIQUE,
     international_id varchar(200) UNIQUE,
     image_id varchar(200) UNIQUE,
     bank_verification_num varchar(200) UNIQUE,
