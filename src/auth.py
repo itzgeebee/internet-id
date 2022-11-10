@@ -47,7 +47,6 @@ def register():
     gender = data['gender']
     country = data['country']
     internet_id = bcrypt.generate_password_hash(f"{first_name}{last_name}{date_of_birth}").decode('utf-8')
-    national_id_number = data['national_id_number']
     international_id = data.get('international_id', None)
     bank_verification_num = data.get('bank_verification_num', None)
     image_id = data.get('image_id', None)
@@ -70,11 +69,6 @@ def register():
         verified = is_verified(id_type="international_id",
                                identities={"international_id": international_id},
                                last_name=last_name)
-        if not verified[0]:
-            abort(401, verified[1])
-    else:
-        verified = is_verified(id_type="national_id",
-                               identities={"national_id": national_id_number})
         if not verified[0]:
             abort(401, verified[1])
 

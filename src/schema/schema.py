@@ -49,11 +49,6 @@ auth_schema = {
             "minLength": 1,
             "maxLength": 100,
         },
-        "national_id_number": {
-            "type": "string",
-            "minLength": 11,
-            "maxLength": 11
-        },
         "international_id": {
             "type": "string",
             "minLength": 1,
