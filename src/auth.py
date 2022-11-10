@@ -88,9 +88,9 @@ def register():
 
         identity_cursor.execute(
             'INSERT INTO identity'
-            '(national_id_number, international_id, bank_verification_num, image_id, user_id) '
-            'VALUES (%s, %s, %s, %s, %s)',
-            (national_id_number, international_id, bank_verification_num, image_id, cursor.lastrowid))
+            '(international_id, bank_verification_num, image_id, user_id) '
+            'VALUES (%s, %s, %s, %s)',
+            (international_id, bank_verification_num, image_id, cursor.lastrowid))
 
         db.commit()
     except Exception as e:
