@@ -114,8 +114,6 @@ def register():
 
     Thread(target=send_mail, args=(current_app.app_context(), msg)).start()
     cursor.close()
-    identity_cursor.close()
-    db.close()
 
     return jsonify({
         'status': 'success',
