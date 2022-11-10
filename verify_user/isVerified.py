@@ -94,7 +94,6 @@ def is_verified_bank_verification_num(identities: dict[str],
     :param identities: dict of identities
     :return: True if user is verified, False otherwise
     """
-
     print("verifying bvn")
     new_payload = {**payload, "searchParameter": identities["bank_verification_num"],
                    "verificationType": verification_types["bank_verification_num"], "firstName": first_name,

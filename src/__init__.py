@@ -8,6 +8,8 @@ from flask_cors import CORS
 from jsonschema import ValidationError
 from werkzeug.exceptions import HTTPException
 from flask_mail import Mail
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 # from flask_cors import CORS
 
@@ -15,7 +17,7 @@ load_dotenv()
 
 bcrypt = Bcrypt()
 sender = Mail()
-
+limiter = Limiter(key_func=get_remote_address)
 
 def create_app(test_config=None):
     # create and configure the app
@@ -50,6 +52,7 @@ def create_app(test_config=None):
     db.init_app(app)
     bcrypt.init_app(app)
     sender.init_app(app)
+    limiter.init_app(app)
 
     @app.errorhandler(HTTPException)
     def handle_exception(e):

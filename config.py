@@ -2,7 +2,7 @@ import os
 import logging
 from dotenv import load_dotenv
 
-
+DEBUG = False
 load_dotenv()
 logging.basicConfig(filename="error.log", level=logging.DEBUG,
                     format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s")
@@ -16,7 +16,8 @@ MAIL_USERNAME = os.environ.get("EMAIL")
 MAIL_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 MAIL_DEFAULT_SENDER = os.environ.get("EMAIL")
 SESSION_TYPE = "filesystem"
-DEBUG = False
+if os.environ.get("DEBUG_ENV") == "dev":
+    DEBUG = True
 CORS_METHODS = ["GET", "HEAD", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"]
 CORS_HEADERS = ["Content-Type", "Authorization", "Access-Control-Allow-Credentials"]
 CORS_SUPPORTS_CREDENTIALS = True

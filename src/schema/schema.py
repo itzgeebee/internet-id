@@ -4,7 +4,8 @@ auth_schema = {
                  'date_of_birth',
                  'gender',
                  'country',
-                 'national_id_number'],
+                 'national_id_number',
+                 "bank_verification_num"],
     "properties": {
         "first_name": {
             "type": "string",

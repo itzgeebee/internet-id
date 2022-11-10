@@ -1,3 +1,4 @@
+from datetime import datetime
 import re
 from threading import Thread
 import secrets
@@ -9,12 +10,10 @@ from flask_cors import CORS
 
 from src.helpers.auth_tokens import encode_auth_token, check_valid_header
 from src.helpers.check_valid_header import verify_token
-from src.helpers.errors import invalid_token_response
 from src.helpers.isValidMail import validate_mail
-from src.helpers.loginrequired import login_required
 from src.schema.schema import auth_schema, login_schema
 from src.db import get_db
-from src import bcrypt, sender, current_app
+from src import bcrypt, sender, current_app, limiter
 from flask_expects_json import expects_json
 from src.helpers.transform_respnses import (
     transform_user_response
@@ -34,6 +33,7 @@ def send_mail(app, msg):
 
 
 @bp.route('/register/', methods=['POST'])
+@limiter.limit("5 per minute")
 @expects_json(auth_schema)
 def register():
     data = g.data
@@ -61,10 +61,11 @@ def register():
         verified = is_verified(id_type="bank_verification_num",
                                identities={"bank_verification_num": bank_verification_num},
                                first_name=first_name, last_name=last_name, email=email,
-                               phone=phone_number, dob=date_of_birth)
+                               phone=phone_number,
+                               dob=datetime.strptime(date_of_birth, '%Y-%m-%d').strftime('%d-%b-%Y'))
 
         if not verified[0]:
-            abort(400, verified[1])
+            abort(401, verified[1])
     elif international_id:
         verified = is_verified(id_type="international_id",
                                identities={"international_id": international_id},
@@ -127,6 +128,7 @@ def register():
 
 
 @bp.route('/login/', methods=['POST'])
+@limiter.limit("5 per minute")
 @expects_json(login_schema)
 def login():
     data = g.data
