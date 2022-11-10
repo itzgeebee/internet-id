@@ -26,10 +26,6 @@ from flask_mail import Message
 bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 
 CORS(bp)
-verification_responses = {
-    "not": "not verified",
-    "pending": "pending, please try again later"
-}
 
 
 def send_mail(app, msg):
@@ -67,18 +63,18 @@ def register():
                                first_name=first_name, last_name=last_name, email=email,
                                phone=phone_number, dob=date_of_birth)
 
-        if not verified:
-            abort(400, verification_responses[verified[1]])
+        if not verified[0]:
+            abort(400, verified[1])
     elif international_id:
         verified = is_verified(id_type="international_id",
                                identities={"international_id": international_id},
                                last_name=last_name)
-        if not verified:
+        if not verified[0]:
             abort(401, verified[1])
     else:
         verified = is_verified(id_type="national_id",
                                identities={"national_id": national_id_number})
-        if not verified:
+        if not verified[0]:
             abort(401, verified[1])
 
     if is_dev:
@@ -179,7 +175,6 @@ def login():
         })
     finally:
         cursor.close()
-        update_cursor.close()
         db.close()
 
 
