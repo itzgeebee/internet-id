@@ -56,12 +56,13 @@ def register():
         abort(400, 'Invalid email address format')
 
     if bank_verification_num:
-        print("bvn")
         verified = is_verified(id_type="bank_verification_num",
                                identities={"bank_verification_num": bank_verification_num},
                                first_name=first_name, last_name=last_name, email=email,
                                phone=phone_number,
                                dob=datetime.strptime(date_of_birth, '%Y-%m-%d').strftime('%d-%b-%Y'))
+        bank_verification_num = True
+        international_id = False
 
         if not verified[0]:
             abort(401, verified[1])
@@ -69,6 +70,8 @@ def register():
         verified = is_verified(id_type="international_id",
                                identities={"international_id": international_id},
                                last_name=last_name)
+        international_id = True
+        bank_verification_num = False
         if not verified[0]:
             abort(401, verified[1])
 
@@ -79,6 +82,7 @@ def register():
     cursor = db.cursor(dictionary=True)
     identity_cursor = db.cursor(dictionary=True)
     try:
+
         cursor.execute(
             'INSERT INTO user'
             '(first_name, last_name, password, email, phone_number, date_of_birth, gender, country, internet_id, is_dev, private_key) '
