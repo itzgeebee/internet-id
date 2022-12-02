@@ -26,9 +26,9 @@ CREATE TABLE user(
 CREATE TABLE identity(
     id int NOT NULL AUTO_INCREMENT,
     user_id int NOT NULL,
-    international_id varchar(200) UNIQUE,
+    international_id boolean DEFAULT false NOT NULL,
     image_id varchar(200) UNIQUE,
-    bank_verification_num varchar(200) UNIQUE,
+    bank_verification_num boolean DEFAULT false NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX (user_id)
